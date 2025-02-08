@@ -1,0 +1,39 @@
+from collections import deque
+
+def shortest_path(graph, start, end):
+    queue = deque([(start, 0)])  
+    visited = set()
+
+    while queue:
+        node, moves = queue.popleft()
+        if node == end:
+            return moves  
+
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph.get(node, []):
+                if neighbor not in visited:
+                    queue.append((neighbor, moves + 1))  
+
+    
+
+
+graph = {'a': ['z', 'b'],'b': ['a', 'c'], 'c': ['b', 'd'], 'd': ['c', 'e'],
+         'e': ['d', 'f'], 'f': ['e', 'g'], 'g': ['f', 'h'], 'h': ['g', 'i'],
+         'i': ['h', 'j'], 'j': ['i', 'k'],'k': ['j', 'l'], 'l': ['k', 'm'],
+         'm': ['l', 'n'], 'n': ['m', 'o'], 'o': ['n', 'p'], 'p': ['o', 'q'],
+         'q': ['p', 'r'], 'r': ['q', 's'], 's': ['r', 't'], 't': ['s', 'u'],
+         'u': ['t', 'v'], 'v': ['u', 'w'], 'w': ['v', 'x'], 'x': ['w', 'y'],
+         'y': ['x', 'z'],'z': ['y', 'a']}
+
+input1 = input()
+rotate = 0
+start_node = 'a' 
+
+for i in range(len(input1)):  
+    end_node = input1[i]
+    moves = shortest_path(graph, start_node, end_node)
+    rotate += moves  
+    start_node = end_node  
+
+print( rotate)
